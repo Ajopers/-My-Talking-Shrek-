@@ -1,0 +1,641 @@
+<html><head><base href="https://ru.websim.ai/"><meta charset="utf-8"><title>Мой Говорящий Шрек</title><style>
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(135deg, #a4d39c, #7cb342);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+  max-width: 800px;
+  width: 90%;
+}
+
+#shrek-container {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  margin: 0 auto;
+}
+
+button {
+  background-color: #7cb342;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin: 10px 5px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+button:hover {
+  background-color: #558b2f;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(0,0,0,0.2);
+}
+
+button .emoji {
+  margin-right: 8px;
+  font-size: 24px;
+}
+
+#speech-bubble {
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 15px;
+  margin-top: 20px;
+  min-height: 60px;
+  font-size: 18px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#speech-bubble:before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  border: 10px solid transparent;
+  border-bottom-color: #f0f0f0;
+  transform: translateX(-50%);
+}
+
+h1 {
+  color: #33691e;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.swamp-decoration {
+  position: absolute;
+  z-index: -1;
+}
+
+.mushroom {
+  width: 40px;
+  height: 40px;
+  background: #d32f2f;
+  border-radius: 50% 50% 0 0;
+  position: absolute;
+}
+
+.mushroom:after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: #f5f5f5;
+  position: absolute;
+  bottom: -15px;
+  left: 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+.grass {
+  width: 2px;
+  height: 30px;
+  background: #4caf50;
+  position: absolute;
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.grass {
+  animation: sway 2s ease-in-out infinite;
+}
+
+@keyframes dance {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(-5deg); }
+  75% { transform: translateY(-20px) rotate(5deg); }
+}
+
+.dancing {
+  animation: dance 0.5s infinite;
+}
+
+#customization-panel, #kitchen-panel {
+  display: none;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+
+#customization-panel h2, #kitchen-panel h2 {
+  margin-top: 0;
+  color: #33691e;
+}
+
+#customization-panel label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+#customization-panel input[type="color"] {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.food-item {
+  display: inline-block;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.food-item:hover {
+  transform: scale(1.1);
+}
+
+@keyframes eat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.eating {
+  animation: eat 1s;
+}
+
+@keyframes chew {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.8); }
+}
+
+.chewing {
+  animation: chew 0.5s infinite;
+}
+
+.firefly {
+  width: 5px;
+  height: 5px;
+  background: #ffff00;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0;
+}
+
+@keyframes firefly {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes poop {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(10px) scale(0.8); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.pooping {
+  animation: poop 1s;
+}
+
+#poop {
+  display: none;
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+}
+
+</style></head>
+<body>
+  <div class="container">
+    <h1>🧅 Мой Говорящий Шрек 🧅</h1>
+    <div id="shrek-container">
+      <svg viewBox="0 0 400 600" width="100%" height="100%">
+        <defs>
+          <radialGradient id="bodyGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" style="stop-color:#b3e0a6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#9acd32;stop-opacity:1" />
+          </radialGradient>
+          <filter id="shadow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+            <feOffset dx="2" dy="2" result="offsetblur"/>
+            <feComponentTransfer>
+              <feFuncA type="linear" slope="0.5"/>
+            </feComponentTransfer>
+            <feMerge> 
+              <feMergeNode/>
+              <feMergeNode in="SourceGraphic"/> 
+            </feMerge>
+          </filter>
+        </defs>
+        
+        <!-- Фон болота -->
+        <rect x="0" y="0" width="400" height="600" fill="#a4d39c"/>
+        <path d="M0,580 Q100,550 200,580 T400,580 V600 H0 Z" fill="#7cb342"/>
+        
+        <g id="shrek">
+          <!-- Тело -->
+          <ellipse cx="200" cy="350" rx="120" ry="150" fill="#ffffff" filter="url(#shadow)"/>
+          
+          <!-- Ноги -->
+          <path d="M140,490 Q135,550 130,580 H170 Q165,550 160,490 Z" fill="#8b4513" filter="url(#shadow)"/>
+          <path d="M240,490 Q245,550 250,580 H210 Q215,550 220,490 Z" fill="#8b4513" filter="url(#shadow)"/>
+          
+          <!-- Ступни -->
+          <ellipse cx="150" cy="580" rx="30" ry="15" fill="#8b4513" filter="url(#shadow)"/>
+          <ellipse cx="230" cy="580" rx="30" ry="15" fill="#8b4513" filter="url(#shadow)"/>
+          
+          <!-- Руки -->
+          <path d="M80,300 Q40,350 60,400" stroke="#9acd32" stroke-width="30" fill="none" filter="url(#shadow)"/>
+          <path d="M320,300 Q360,350 340,400" stroke="#9acd32" stroke-width="30" fill="none" filter="url(#shadow)"/>
+          
+          <!-- Жилет -->
+          <path id="vest" d="M120,230 Q200,260 280,230 L260,480 Q200,510 140,480 Z" fill="#654321" filter="url(#shadow)"/>
+          
+          <!-- Рубашка -->
+          <path id="shirt" d="M140,230 Q200,260 260,230 L240,470 Q200,500 160,470 Z" fill="#f0f0f0" filter="url(#shadow)"/>
+          
+          <!-- Воротник рубашки -->
+          <path d="M170,230 Q200,250 230,230 L220,260 Q200,270 180,260 Z" fill="#d3d3d3" filter="url(#shadow)"/>
+          
+          <!-- Пояс -->
+          <rect x="140" y="450" width="120" height="20" fill="#8b4513" filter="url(#shadow)"/>
+          <rect x="180" y="450" width="40" height="20" fill="#ffd700" filter="url(#shadow)"/> <!-- Пряжка -->
+          
+          <!-- Узор на жилете -->
+          <path d="M140,280 Q200,310 260,280 Q200,330 140,280" fill="none" stroke="#8b4513" stroke-width="3"/>
+          <path d="M140,350 Q200,380 260,350 Q200,400 140,350" fill="none" stroke="#8b4513" stroke-width="3"/>
+          
+          <!-- Голова -->
+          <g transform="translate(100, 50) scale(1)">
+            <ellipse cx="100" cy="100" rx="80" ry="95" fill="url(#bodyGradient)" filter="url(#shadow)"/>
+            
+            <!-- Уши -->
+            <path d="M20,80 Q0,40 20,0 Q40,20 20,80" fill="#9acd32" filter="url(#shadow)"/>
+            <path d="M180,80 Q200,40 180,0 Q160,20 180,80" fill="#9acd32" filter="url(#shadow)"/>
+            
+            <!-- Глаза -->
+            <g id="left-eye">
+              <ellipse cx="70" cy="90" rx="25" ry="20" fill="white" filter="url(#shadow)"/>
+              <circle cx="70" cy="90" r="12" fill="#8b4513"/>
+              <circle cx="74" cy="86" r="4" fill="white"/>
+              <ellipse id="left-eyebrow" cx="70" cy="65" rx="30" ry="8" fill="#556b2f" filter="url(#shadow)"/>
+            </g>
+            <g id="right-eye">
+              <ellipse cx="130" cy="90" rx="25" ry="20" fill="white" filter="url(#shadow)"/>
+              <circle cx="130" cy="90" r="12" fill="#8b4513"/>
+              <circle cx="134" cy="86" r="4" fill="white"/>
+              <ellipse id="right-eyebrow" cx="130" cy="65" rx="30" ry="8" fill="#556b2f" filter="url(#shadow)"/>
+            </g>
+            
+            <!-- Нос -->
+            <path d="M90,110 Q100,130 110,110 Q100,140 90,110" fill="#8fbc8f" filter="url(#shadow)"/>
+            
+            <!-- Рот -->
+            <g id="mouth">
+              <path d="M60,150 Q100,170 140,150" fill="none" stroke="#8b4513" stroke-width="5" filter="url(#shadow)"/>
+            </g>
+            
+            <!-- Морщинки -->
+            <path id="forehead-wrinkle" d="M40,40 Q100,20 160,40" fill="none" stroke="#556b2f" stroke-width="3" opacity="0"/>
+            <path id="left-cheek-wrinkle" d="M30,130 Q50,140 70,130" fill="none" stroke="#556b2f" stroke-width="3" opacity="0"/>
+            <path id="right-cheek-wrinkle" d="M130,130 Q150,140 170,130" fill="none" stroke="#556b2f" stroke-width="3" opacity="0"/>
+          </g>
+        </g>
+      </svg>
+      <div id="poop">💩</div>
+    </div>
+    <div>
+      <button onclick="speak()"><span class="emoji">💬</span>Говорить</button>
+      <button onclick="dance()"><span class="emoji">💃</span>Танцевать</button>
+      <button onclick="toggleCustomization()"><span class="emoji">🎨</span>Кастомизировать</button>
+      <button onclick="toggleKitchen()"><span class="emoji">🍽️</span>На кухню!</button>
+      <button onclick="poop()"><span class="emoji">💩</span>Покакать</button>
+    </div>
+    <div id="speech-bubble"></div>
+  </div>
+
+  <div id="customization-panel">
+    <h2>🎨 Кастомизация Шрека</h2>
+    <label for="vest-color">Цвет жилета:</label>
+    <input type="color" id="vest-color" value="#654321" onchange="changeColor('vest', this.value)">
+    <label for="shirt-color">Цвет рубашки:</label>
+    <input type="color" id="shirt-color" value="#f0f0f0" onchange="changeColor('shirt', this.value)">
+    <button onclick="toggleCustomization()"><span class="emoji">✖️</span>Закрыть</button>
+  </div>
+
+  <div id="kitchen-panel">
+    <h2>🍽️ Кухня Шрека</h2>
+    <div class="food-item" onclick="eat('onion')">
+      <svg width="50" height="50" viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="20" fill="#f0e68c"/>
+        <path d="M15,25 Q25,10 35,25" fill="none" stroke="#8b4513" stroke-width="2"/>
+      </svg>
+      <p>🧅 Луковица</p>
+    </div>
+    <div class="food-item" onclick="eat('swamp-soup')">
+      <svg width="50" height="50" viewBox="0 0 50 50">
+        <rect x="10" y="20" width="30" height="25" fill="#8b4513"/>
+        <path d="M10,20 Q25,10 40,20" fill="#4a7023"/>
+        <circle cx="25" cy="30" r="3" fill="#a0522d"/>
+        <circle cx="20" cy="35" r="3" fill="#6b8e23"/>
+        <circle cx="30" cy="33" r="3" fill="#556b2f"/>
+      </svg>
+      <p>🍲 Болотный суп</p>
+    </div>
+    <div class="food-item" onclick="eat('eyeball-stew')">
+      <svg width="50" height="50" viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="20" fill="#8b0000"/>
+        <circle cx="25" cy="25" r="10" fill="#f0f8ff"/>
+        <circle cx="25" cy="25" r="5" fill="#000080"/>
+      </svg>
+      <p>👁️ Рагу из глазных яблок</p>
+    </div>
+    <button onclick="toggleKitchen()"><span class="emoji">✖️</span>Закрыть</button>
+  </div>
+
+  <!-- Декорации болота -->
+  <div class="swamp-decoration mushroom" style="top: 10%; left: 5%;"></div>
+  <div class="swamp-decoration mushroom" style="top: 80%; right: 8%;"></div>
+  <div class="swamp-decoration grass" style="bottom: 0; left: 15%;"></div>
+  <div class="swamp-decoration grass" style="bottom: 0; left: 25%;"></div>
+  <div class="swamp-decoration grass" style="bottom: 0; right: 18%;"></div>
+
+  <!-- Светлячки -->
+  <div class="firefly" style="top: 20%; left: 10%;"></div>
+  <div class="firefly" style="top: 30%; right: 15%;"></div>
+  <div class="firefly" style="bottom: 25%; left: 20%;"></div>
+  <div class="firefly" style="bottom: 15%; right: 25%;"></div>
+
+  <audio id="dance-music" loop>
+    <source src="https://cdn.websim.ai/source/audio/shrek_dance.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const phrases = [
+      "Ослы - друзья, а не еда!",
+      "Это моё болото!",
+      "Слои, у меня есть слои!",
+      "Лучше снаружи, чем внутри.",
+      "Огры как лук!",
+      "Кто-нибудь видел дракона?",
+      "Фиона, я иду!",
+      "Жил-был я... конец.",
+      "Страшно быть разным.",
+      "Ты там котлеты делаешь?",
+    ];
+
+    const emotions = ['happy', 'angry', 'surprised', 'sad', 'neutral'];
+
+    function speak() {
+      const speechBubble = document.getElementById('speech-bubble');
+      const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+      speechBubble.textContent = randomPhrase;
+      
+      const randomEmotion = emotions[Math.floor(Math.random() * emotions.length)];
+      setEmotion(randomEmotion);
+      
+      animateMouth();
+      createMumbleSound();
+    }
+
+    function setEmotion(emotion) {
+      const leftEye = document.getElementById('left-eye');
+      const rightEye = document.getElementById('right-eye');
+      const leftEyebrow = document.getElementById('left-eyebrow');
+      const rightEyebrow = document.getElementById('right-eyebrow');
+      const mouth = document.getElementById('mouth').querySelector('path');
+      const foreheadWrinkle = document.getElementById('forehead-wrinkle');
+      const leftCheekWrinkle = document.getElementById('left-cheek-wrinkle');
+      const rightCheekWrinkle = document.getElementById('right-cheek-wrinkle');
+
+      leftEye.setAttribute('transform', '');
+      rightEye.setAttribute('transform', '');
+      leftEyebrow.setAttribute('d', 'M40,65 Q70,57 100,65');
+      rightEyebrow.setAttribute('d', 'M100,65 Q130,57 160,65');
+      mouth.setAttribute('d', 'M60,150 Q100,170 140,150');
+      foreheadWrinkle.setAttribute('opacity', '0');
+      leftCheekWrinkle.setAttribute('opacity', '0');
+      rightCheekWrinkle.setAttribute('opacity', '0');
+
+      switch(emotion) {
+        case 'happy':
+          leftEyebrow.setAttribute('d', 'M40,60 Q70,52 100,60');
+          rightEyebrow.setAttribute('d', 'M100,60 Q130,52 160,60');
+          mouth.setAttribute('d', 'M60,150 Q100,190 140,150');
+          break;
+        case 'angry':
+          leftEyebrow.setAttribute('d', 'M40,60 Q70,52 100,70');
+          rightEyebrow.setAttribute('d', 'M100,70 Q130,52 160,60');
+          mouth.setAttribute('d', 'M60,160 Q100,140 140,160');
+          foreheadWrinkle.setAttribute('opacity', '1');
+          break;
+        case 'surprised':
+          leftEye.setAttribute('transform', 'translate(0, -10)');
+          rightEye.setAttribute('transform', 'translate(0, -10)');
+          leftEyebrow.setAttribute('d', 'M40,50 Q70,42 100,50');
+          rightEyebrow.setAttribute('d', 'M100,50 Q130,42 160,50');
+          mouth.setAttribute('d', 'M60,160 Q100,200 140,160');
+          break;
+        case 'sad':
+          leftEyebrow.setAttribute('d', 'M40,70 Q70,78 100,70');
+          rightEyebrow.setAttribute('d', 'M100,70 Q130,78 160,70');
+          mouth.setAttribute('d', 'M60,160 Q100,140 140,160');
+          leftCheekWrinkle.setAttribute('opacity', '1');
+          rightCheekWrinkle.setAttribute('opacity', '1');
+          break;
+      }
+    }
+
+    function animateMouth() {
+      const mouth = document.getElementById('mouth').querySelector('path');
+      let frame = 0;
+      const mouthAnimation = setInterval(() => {
+        if (frame % 2 === 0) {
+          mouth.setAttribute('d', 'M60,150 Q100,180 140,150');
+        } else {
+          mouth.setAttribute('d', 'M60,150 Q100,160 140,150');
+        }
+        frame++;
+        if (frame > 10) {
+          clearInterval(mouthAnimation);
+          mouth.setAttribute('d', 'M60,150 Q100,170 140,150');
+        }
+      }, 100);
+    }
+
+    function createMumbleSound() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.type = 'sawtooth';
+      oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+      
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.start();
+      
+      const lfo = audioContext.createOscillator();
+      lfo.frequency.setValueAtTime(4, audioContext.currentTime);
+      const lfoGain = audioContext.createGain();
+      lfoGain.gain.setValueAtTime(30, audioContext.currentTime);
+      lfo.connect(lfoGain);
+      lfoGain.connect(oscillator.frequency);
+      lfo.start();
+      
+      setTimeout(() => {
+        oscillator.stop();
+        lfo.stop();
+      }, 1000);
+    }
+
+    // Добавляем анимацию для травы
+    const grasses = document.querySelectorAll('.grass');
+    grasses.forEach((grass, index) => {
+      grass.style.animation = `sway 2s ease-in-out infinite`;
+      grass.style.animationDelay = `${index * 0.2}s`;
+    });
+
+    // Анимация светлячков
+    const fireflies = document.querySelectorAll('.firefly');
+    fireflies.forEach((firefly, index) => {
+      firefly.style.animation = `firefly 3s ease-in-out infinite`;
+      firefly.style.animationDelay = `${index * 0.5}s`;
+    });
+
+    let isDancing = false;
+
+    function dance() {
+      const shrek = document.getElementById('shrek');
+      const music = document.getElementById('dance-music');
+      
+      if (!isDancing) {
+        shrek.classList.add('dancing');
+        music.play();
+        isDancing = true;
+      } else {
+        shrek.classList.remove('dancing');
+        music.pause();
+        music.currentTime = 0;
+        isDancing = false;
+      }
+    }
+
+    function toggleCustomization() {
+      const panel = document.getElementById('customization-panel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function changeColor(elementId, color) {
+      const element = document.getElementById(elementId);
+      element.setAttribute('fill', color);
+    }
+
+    function toggleKitchen() {
+      const panel = document.getElementById('kitchen-panel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function eat(food) {
+      const shrek = document.getElementById('shrek');
+      const mouth = document.getElementById('mouth');
+      shrek.classList.add('eating');
+      mouth.classList.add('chewing');
+      
+      let phrase = '';
+      switch(food) {
+        case 'onion':
+          phrase = 'М-м-м, луковичка! Как я люблю эти слои! 🧅';
+          break;
+        case 'swamp-soup':
+          phrase = 'Болотный суп - лучшее блюдо для огра! 🍲';
+          break;
+        case 'eyeball-stew':
+          phrase = 'Рагу из глазных яблок? Отлично, еда с перспективой! 👁️';
+          break;
+      }
+      
+      const speechBubble = document.getElementById('speech-bubble');
+      speechBubble.textContent = phrase;
+      
+      // Анимация открытия и закрытия рта
+      const mouthPath = mouth.querySelector('path');
+      let frame = 0;
+      const chewingAnimation = setInterval(() => {
+        if (frame % 2 === 0) {
+          mouthPath.setAttribute('d', 'M60,140 Q100,200 140,140'); // Открытый рот
+        } else {
+          mouthPath.setAttribute('d', 'M60,150 Q100,170 140,150'); // Закрытый рот
+        }
+        frame++;
+        if (frame > 10) {
+          clearInterval(chewingAnimation);
+          mouthPath.setAttribute('d', 'M60,150 Q100,170 140,150');
+        }
+      }, 200);
+      
+      // Звуки поедания
+      const eatingSound = new Audio('https://cdn.websim.ai/source/audio/eating_sound.mp3');
+      eatingSound.play();
+      
+      setTimeout(() => {
+        shrek.classList.remove('eating');
+        mouth.classList.remove('chewing');
+      }, 2000);
+    }
+
+    function poop() {
+      const shrek = document.getElementById('shrek');
+      const poopEmoji = document.getElementById('poop');
+      const speechBubble = document.getElementById('speech-bubble');
+      
+      shrek.classList.add('pooping');
+      poopEmoji.style.display = 'block';
+      
+      // Звук
+      const poopSound = new Audio('https://cdn.websim.ai/source/audio/poop_sound.mp3');
+      poopSound.play();
+      
+      speechBubble.textContent = 'Ох, полегчало! Вот это я понимаю - удобрение для болота! 💩';
+      
+      setTimeout(() => {
+        shrek.classList.remove('pooping');
+        poopEmoji.style.display = 'none';
+      }, 2000);
+    }
+  </script>
+</body></html>
